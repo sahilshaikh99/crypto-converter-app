@@ -12,7 +12,7 @@ const CryptoCrypto = () => {
     const convert = async () => {
       if (currency1 !== '' && currency2 !== '' && value1 !== '') {
         try {
-          const response = await fetch(`http://localhost:5500/api/convert/cryptotocrypto/${currency1}/${currency2}/${value1}`, {
+          const response = await fetch(`${process.env.REACT_APP_BACKEND_APP_API_URL}/api/convert/cryptotocrypto/${currency1}/${currency2}/${value1}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',

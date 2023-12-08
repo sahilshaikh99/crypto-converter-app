@@ -140,6 +140,22 @@ app.get('/api/convert/cryptotocrypto/:currency1/:currency2/:quantity', async (re
     }
 });
 
+app.post('/calculate-sip', (req, res) => {
+    const { investmentAmount, durationMonths, expectedRate } = req.body;
+  
+    if (!investmentAmount || !durationMonths || !expectedRate) {
+      return res.status(400).json({ error: 'Please provide all required parameters.' });
+    }
+  
+    // Convert annual rate of return to monthly
+    const monthlyRate = expectedRate / 100 / 12;
+    
+    // SIP calculation
+    const futureValue = investmentAmount * ((Math.pow(1 + monthlyRate, durationMonths) - 1) * (1 + monthlyRate) / monthlyRate);
+  
+    res.json({ futureValue });
+  });
+
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
